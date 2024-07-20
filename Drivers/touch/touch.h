@@ -2,35 +2,35 @@
 #define STM32H750XBH6_7_CACHE_TEST_TOUCH_H
 #include "main.h"
 
-#define TS_RST_0 HAL_GPIO_WritePin(TS_RST_GPIO_Port, TS_RST_Pin, GPIO_PIN_RESET) // ¸ù¾İÊµ¼ÊÒı½ÅĞŞ¸Ä
-#define TS_RST_1 HAL_GPIO_WritePin(TS_RST_GPIO_Port, TS_RST_Pin, GPIO_PIN_SET)   // ¸ù¾İÊµ¼ÊÒı½ÅĞŞ¸Ä
-// FT5206 I2CµØÖ·
+#define TS_RST_0 HAL_GPIO_WritePin(TS_RST_GPIO_Port, TS_RST_Pin, GPIO_PIN_RESET) // æ ¹æ®å®é™…å¼•è„šä¿®æ”¹
+#define TS_RST_1 HAL_GPIO_WritePin(TS_RST_GPIO_Port, TS_RST_Pin, GPIO_PIN_SET)   // æ ¹æ®å®é™…å¼•è„šä¿®æ”¹
+// FT5206 I2Cåœ°å€
 #define FT5206_ADDR 0x70
 
-// I2C¶ÁĞ´ÃüÁî
-#define FT_CMD_WR 0x70 // Ğ´ÃüÁî
-#define FT_CMD_RD 0x71 // ¶ÁÃüÁî
+// I2Cè¯»å†™å‘½ä»¤
+#define FT_CMD_WR 0x70 // å†™å‘½ä»¤
+#define FT_CMD_RD 0x71 // è¯»å‘½ä»¤
 
-// FT5206¼Ä´æÆ÷¶¨Òå
-#define FT_DEVIDE_MODE 0x00 // FT5206Ä£Ê½¿ØÖÆ¼Ä´æÆ÷
-#define FT_REG_NUM_FINGER 0x02 // ´¥Ãş×´Ì¬¼Ä´æÆ÷
-#define FT_TP1_REG 0x03 // µÚÒ»¸ö´¥ÃşµãÊı¾İµØÖ·
-#define FT_TP2_REG 0x09 // µÚ¶ş¸ö´¥ÃşµãÊı¾İµØÖ·
-#define FT_TP3_REG 0x0F // µÚÈı¸ö´¥ÃşµãÊı¾İµØÖ·
-#define FT_TP4_REG 0x15 // µÚËÄ¸ö´¥ÃşµãÊı¾İµØÖ·
-#define FT_TP5_REG 0x1B // µÚÎå¸ö´¥ÃşµãÊı¾İµØÖ·
-#define FT_IDGLIB_VERSION	0XA1 	//¹Ì¼ş°æ±¾¼Ä´æÆ÷
+// FT5206å¯„å­˜å™¨å®šä¹‰
+#define FT_DEVIDE_MODE 0x00 // FT5206æ¨¡å¼æ§åˆ¶å¯„å­˜å™¨
+#define FT_REG_NUM_FINGER 0x02 // è§¦æ‘¸çŠ¶æ€å¯„å­˜å™¨
+#define FT_TP1_REG 0x03 // ç¬¬ä¸€ä¸ªè§¦æ‘¸ç‚¹æ•°æ®åœ°å€
+#define FT_TP2_REG 0x09 // ç¬¬äºŒä¸ªè§¦æ‘¸ç‚¹æ•°æ®åœ°å€
+#define FT_TP3_REG 0x0F // ç¬¬ä¸‰ä¸ªè§¦æ‘¸ç‚¹æ•°æ®åœ°å€
+#define FT_TP4_REG 0x15 // ç¬¬å››ä¸ªè§¦æ‘¸ç‚¹æ•°æ®åœ°å€
+#define FT_TP5_REG 0x1B // ç¬¬äº”ä¸ªè§¦æ‘¸ç‚¹æ•°æ®åœ°å€
+#define FT_IDGLIB_VERSION	0XA1 	//å›ºä»¶ç‰ˆæœ¬å¯„å­˜å™¨
 #define FT_CHIP_ID_REG      0xA8
-#define FT_ID_G_MODE 0xA4 // FT5206ÖĞ¶ÏÄ£Ê½¿ØÖÆ¼Ä´æÆ÷
-#define FT_ID_G_THGROUP 0x80 // ´¥ÃşÓĞĞ§ÖµÉèÖÃ¼Ä´æÆ÷
-#define FT_ID_G_PERIODACTIVE 0x88 // ¼¤»î×´Ì¬ÖÜÆÚÉèÖÃ¼Ä´æÆ÷
+#define FT_ID_G_MODE 0xA4 // FT5206ä¸­æ–­æ¨¡å¼æ§åˆ¶å¯„å­˜å™¨
+#define FT_ID_G_THGROUP 0x80 // è§¦æ‘¸æœ‰æ•ˆå€¼è®¾ç½®å¯„å­˜å™¨
+#define FT_ID_G_PERIODACTIVE 0x88 // æ¿€æ´»çŠ¶æ€å‘¨æœŸè®¾ç½®å¯„å­˜å™¨
 
-// ´¥ÃşµãÊı¾İ½á¹¹
+// è§¦æ‘¸ç‚¹æ•°æ®ç»“æ„
 typedef struct {
-    uint8_t id;        // ´¥ÃşµãID
-    uint16_t x;       // X×ø±ê
-    uint16_t y;       // Y×ø±ê
-    uint8_t pressure; // Ñ¹Á¦
+    uint8_t id;        // è§¦æ‘¸ç‚¹ID
+    uint16_t x;       // Xåæ ‡
+    uint16_t y;       // Yåæ ‡
+    uint8_t pressure; // å‹åŠ›
 } TouchPoint;
 
 

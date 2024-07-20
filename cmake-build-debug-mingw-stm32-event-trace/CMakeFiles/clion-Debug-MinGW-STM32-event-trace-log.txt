@@ -14,6 +14,6 @@
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
 -- Minimal optimization, debug info included
--- Configuring done (2.3s)
+-- Configuring done (2.2s)
 -- Generating done (0.1s)
 -- Build files have been written to: E:/STM32_Example/ClionProjects/STM32H750XBH6_LVGL/cmake-build-debug-mingw-stm32-event-trace

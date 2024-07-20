@@ -121,6 +121,7 @@ int main(void)
   MX_SDMMC1_SD_Init();
   MX_FATFS_Init();
   MX_I2C1_Init();
+  MX_I2C4_Init();
   /* USER CODE BEGIN 2 */
     LCD_BL_GPIO_Port->ODR|=LCD_BL_Pin;
 
@@ -132,6 +133,18 @@ int main(void)
     FT5206_Init();
 
 //    TS_RST_GPIO_Port->ODR|=TS_RST_Pin;
+    uint8_t dete_test=0;
+    int16_t num=300;
+    while(num>0)
+    {
+        dete_test=0;
+        FT5206_read_reg(FT_REG_NUM_FINGER,&dete_test,1);
+        HAL_Delay(10);
+//        dete_test=0;
+//        FT5206_write_reg(FT_ID_G_MODE,&dete_test,1);
+//        HAL_Delay(10);
+        num--;
+    }
 
   /* USER CODE END 2 */
 

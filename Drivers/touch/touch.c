@@ -9,26 +9,26 @@ void touch_RST()
 }
 void FT5206_read_reg(uint16_t reg_address,uint8_t * pdate,uint16_t size)
 {
-    HAL_I2C_Mem_Read(&hi2c1, FT5206_ADDR, reg_address, I2C_MEMADD_SIZE_8BIT, pdate, size,100);
+    HAL_I2C_Mem_Read(&hi2c4, FT_CMD_RD, reg_address, I2C_MEMADD_SIZE_8BIT, pdate, size,100);
 }
 void FT5206_write_reg(uint16_t reg_address,uint8_t * pdate,uint16_t size)
 {
-    HAL_I2C_Mem_Write(&hi2c1, FT5206_ADDR, reg_address, I2C_MEMADD_SIZE_8BIT, pdate, size,100);
+    HAL_I2C_Mem_Write(&hi2c4, FT_CMD_WR, reg_address, I2C_MEMADD_SIZE_8BIT, pdate, size,100);
 }
-// ³õÊ¼»¯FT5206
+// åˆå§‹åŒ–FT5206
 void FT5206_Init(void) {
     uint8_t mode = 0x00;
     uint8_t reg_value[2]={0};
-    TS_RST_0; // ¸´Î»´¥ÃşÆÁ
+    TS_RST_0; // å¤ä½è§¦æ‘¸å±
     HAL_Delay(10);
-    TS_RST_1; // ÊÍ·Å¸´Î»
+    TS_RST_1; // é‡Šæ”¾å¤ä½
     HAL_Delay(10);
 
-    // ÅäÖÃ¹¤×÷Ä£Ê½
-    mode = 0x00; // ÉèÖÃÎªÕı³£¹¤×÷Ä£Ê½
+    // é…ç½®å·¥ä½œæ¨¡å¼
+    mode = 0x00; // è®¾ç½®ä¸ºæ­£å¸¸å·¥ä½œæ¨¡å¼
     FT5206_write_reg(FT_DEVIDE_MODE, &mode, 1);
 
-    mode = 0x01; // ÉèÖÃÎªÖĞ¶ÏÄ£Ê½
+    mode = 0x01; // è®¾ç½®ä¸ºä¸­æ–­æ¨¡å¼
     FT5206_write_reg(FT_ID_G_MODE, &mode, 1);
 
     FT5206_read_reg(FT_CHIP_ID_REG, reg_value, 1);
@@ -38,33 +38,33 @@ void FT5206_Init(void) {
     printf("Touch screen Version:%#X\r\n", ((unsigned short)reg_value[0] << 8) + reg_value[1]);
 }
 
-// ¶ÁÈ¡´¥ÃşÊı¾İ
+// è¯»å–è§¦æ‘¸æ•°æ®
 void FT5206_Read_Touch(void) {
     uint8_t num_fingers=0;
 
     FT5206_read_reg(FT_REG_NUM_FINGER,&num_fingers, 1);
 
-    // µ÷ÊÔĞÅÏ¢
+    // è°ƒè¯•ä¿¡æ¯
     printf("Number of fingers: %d\n", num_fingers);
-    // ÏŞÖÆ×î´ó´¥ÃşµãÊıÁ¿
+    // é™åˆ¶æœ€å¤§è§¦æ‘¸ç‚¹æ•°é‡
     num_fingers = (num_fingers > 5) ? 5 : num_fingers;
 
-    TouchPoint touch_points[5]; // ´æ´¢´¥ÃşµãÊı¾İ
+    TouchPoint touch_points[5]; // å­˜å‚¨è§¦æ‘¸ç‚¹æ•°æ®
 
     for (uint8_t i = 0; i < num_fingers; i++) {
         uint8_t data[6];
         FT5206_read_reg(FT_TP1_REG + (i * 6), data, 6);
 
-        // ½âÎö´¥ÃşµãÊı¾İ
-        touch_points[i].id = data[0] & 0x0F; // ´¥ÃşµãID
-        touch_points[i].x = ((data[1] & 0x0F) << 8) | data[2]; // X×ø±ê
-        touch_points[i].y = ((data[3] & 0x0F) << 8) | data[4]; // Y×ø±ê
-        touch_points[i].pressure = data[5]; // Ñ¹Á¦Öµ
+        // è§£æè§¦æ‘¸ç‚¹æ•°æ®
+        touch_points[i].id = data[0] & 0x0F; // è§¦æ‘¸ç‚¹ID
+        touch_points[i].x = ((data[1] & 0x0F) << 8) | data[2]; // Xåæ ‡
+        touch_points[i].y = ((data[3] & 0x0F) << 8) | data[4]; // Yåæ ‡
+        touch_points[i].pressure = data[5]; // å‹åŠ›å€¼
     }
 
-    // ´¦Àí´¥ÃşµãÊı¾İ
+    // å¤„ç†è§¦æ‘¸ç‚¹æ•°æ®
     for (uint8_t i = 0; i < num_fingers; i++) {
-        // ÕâÀï¿ÉÒÔÌí¼Ó´¦ÀíÂß¼­£¬ÀıÈç´òÓ¡»ò´æ´¢´¥ÃşµãĞÅÏ¢
+        // è¿™é‡Œå¯ä»¥æ·»åŠ å¤„ç†é€»è¾‘ï¼Œä¾‹å¦‚æ‰“å°æˆ–å­˜å‚¨è§¦æ‘¸ç‚¹ä¿¡æ¯
 //        printf("Touch Point %d: ID=%d, X=%d, Y=%d, Pressure=%d\n",
 //               touch_points[i].id, touch_points[i].id, touch_points[i].x, touch_points[i].y, touch_points[i].pressure);
     }

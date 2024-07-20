@@ -95,58 +95,58 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   * @retval None
   */
 void MX_FREERTOS_Init(void) {
-    /* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
-    /* USER CODE END Init */
+  /* USER CODE END Init */
 
-    /* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE BEGIN RTOS_MUTEX */
     /* add mutexes, ... */
-    /* USER CODE END RTOS_MUTEX */
+  /* USER CODE END RTOS_MUTEX */
 
-    /* USER CODE BEGIN RTOS_SEMAPHORES */
+  /* USER CODE BEGIN RTOS_SEMAPHORES */
     /* add semaphores, ... */
-    /* USER CODE END RTOS_SEMAPHORES */
+  /* USER CODE END RTOS_SEMAPHORES */
 
-    /* USER CODE BEGIN RTOS_TIMERS */
+  /* USER CODE BEGIN RTOS_TIMERS */
     /* start timers, add new ones, ... */
-    /* USER CODE END RTOS_TIMERS */
+  /* USER CODE END RTOS_TIMERS */
 
-    /* USER CODE BEGIN RTOS_QUEUES */
+  /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
-    /* USER CODE END RTOS_QUEUES */
+  /* USER CODE END RTOS_QUEUES */
 
-    /* Create the thread(s) */
-    /* definition and creation of defaultTask */
-    osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 1024);
-    defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* Create the thread(s) */
+  /* definition and creation of defaultTask */
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 1024);
+  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-    /* definition and creation of Debug_task */
-    osThreadDef(Debug_task, debug_thread, osPriorityNormal, 0, 1024);
-    Debug_taskHandle = osThreadCreate(osThread(Debug_task), NULL);
+  /* definition and creation of Debug_task */
+  osThreadDef(Debug_task, debug_thread, osPriorityNormal, 0, 1024);
+  Debug_taskHandle = osThreadCreate(osThread(Debug_task), NULL);
 
-    /* definition and creation of lvgl_task */
-    osThreadDef(lvgl_task, lvgl_thread, osPriorityLow, 0, 1024);
-    lvgl_taskHandle = osThreadCreate(osThread(lvgl_task), NULL);
+  /* definition and creation of lvgl_task */
+  osThreadDef(lvgl_task, lvgl_thread, osPriorityLow, 0, 1024);
+  lvgl_taskHandle = osThreadCreate(osThread(lvgl_task), NULL);
 
-    /* definition and creation of flie_task */
-    osThreadDef(flie_task, flie_thread, osPriorityNormal, 0, 1024);
-    flie_taskHandle = osThreadCreate(osThread(flie_task), NULL);
+  /* definition and creation of flie_task */
+  osThreadDef(flie_task, flie_thread, osPriorityNormal, 0, 1024);
+  flie_taskHandle = osThreadCreate(osThread(flie_task), NULL);
 
-    /* definition and creation of key_task */
-    osThreadDef(key_task, key_thread, osPriorityLow, 0, 512);
-    key_taskHandle = osThreadCreate(osThread(key_task), NULL);
+  /* definition and creation of key_task */
+  osThreadDef(key_task, key_thread, osPriorityLow, 0, 512);
+  key_taskHandle = osThreadCreate(osThread(key_task), NULL);
 
-    /* definition and creation of led_task */
-    osThreadDef(led_task, led_thread, osPriorityLow, 0, 512);
-    led_taskHandle = osThreadCreate(osThread(led_task), NULL);
+  /* definition and creation of led_task */
+  osThreadDef(led_task, led_thread, osPriorityLow, 0, 512);
+  led_taskHandle = osThreadCreate(osThread(led_task), NULL);
 
-    /* definition and creation of main_task */
-    osThreadDef(main_task, main_thread, osPriorityIdle, 0, 2048);
-    main_taskHandle = osThreadCreate(osThread(main_task), NULL);
+  /* definition and creation of main_task */
+  osThreadDef(main_task, main_thread, osPriorityIdle, 0, 2048);
+  main_taskHandle = osThreadCreate(osThread(main_task), NULL);
 
-    /* USER CODE BEGIN RTOS_THREADS */
+  /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-    /* USER CODE END RTOS_THREADS */
+  /* USER CODE END RTOS_THREADS */
 
 }
 
@@ -159,13 +159,13 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void const * argument)
 {
-    /* USER CODE BEGIN StartDefaultTask */
+  /* USER CODE BEGIN StartDefaultTask */
     /* Infinite loop */
     for(;;)
     {
         osDelay(1);
     }
-    /* USER CODE END StartDefaultTask */
+  /* USER CODE END StartDefaultTask */
 }
 
 /* USER CODE BEGIN Header_debug_thread */
@@ -177,13 +177,13 @@ void StartDefaultTask(void const * argument)
 /* USER CODE END Header_debug_thread */
 void debug_thread(void const * argument)
 {
-    /* USER CODE BEGIN debug_thread */
+  /* USER CODE BEGIN debug_thread */
     /* Infinite loop */
     for(;;)
     {
         osDelay(1);
     }
-    /* USER CODE END debug_thread */
+  /* USER CODE END debug_thread */
 }
 
 /* USER CODE BEGIN Header_lvgl_thread */
@@ -195,13 +195,13 @@ void debug_thread(void const * argument)
 /* USER CODE END Header_lvgl_thread */
 void lvgl_thread(void const * argument)
 {
-    /* USER CODE BEGIN lvgl_thread */
+  /* USER CODE BEGIN lvgl_thread */
     /* Infinite loop */
     for(;;)
     {
         osDelay(1);
     }
-    /* USER CODE END lvgl_thread */
+  /* USER CODE END lvgl_thread */
 }
 
 /* USER CODE BEGIN Header_flie_thread */
@@ -213,13 +213,13 @@ void lvgl_thread(void const * argument)
 /* USER CODE END Header_flie_thread */
 void flie_thread(void const * argument)
 {
-    /* USER CODE BEGIN flie_thread */
+  /* USER CODE BEGIN flie_thread */
     /* Infinite loop */
     for(;;)
     {
         osDelay(1);
     }
-    /* USER CODE END flie_thread */
+  /* USER CODE END flie_thread */
 }
 
 /* USER CODE BEGIN Header_key_thread */
@@ -231,14 +231,14 @@ void flie_thread(void const * argument)
 /* USER CODE END Header_key_thread */
 void key_thread(void const * argument)
 {
-    /* USER CODE BEGIN key_thread */
+  /* USER CODE BEGIN key_thread */
     /* Infinite loop */
     for(;;)
     {
 //        FT5206_Read_Touch();
         osDelay(100);
     }
-    /* USER CODE END key_thread */
+  /* USER CODE END key_thread */
 }
 
 /* USER CODE BEGIN Header_led_thread */
@@ -250,7 +250,7 @@ void key_thread(void const * argument)
 /* USER CODE END Header_led_thread */
 void led_thread(void const * argument)
 {
-    /* USER CODE BEGIN led_thread */
+  /* USER CODE BEGIN led_thread */
     LED_R_GPIO_Port->ODR |= LED_R_Pin;
     LED_B_GPIO_Port->ODR |= LED_B_Pin;
     /* Infinite loop */
@@ -259,7 +259,7 @@ void led_thread(void const * argument)
         osDelay(100);
         LED_B_GPIO_Port->ODR ^= LED_B_Pin;
     }
-    /* USER CODE END led_thread */
+  /* USER CODE END led_thread */
 }
 
 /* USER CODE BEGIN Header_main_thread */
@@ -271,13 +271,13 @@ void led_thread(void const * argument)
 /* USER CODE END Header_main_thread */
 void main_thread(void const * argument)
 {
-    /* USER CODE BEGIN main_thread */
+  /* USER CODE BEGIN main_thread */
     /* Infinite loop */
     for(;;)
     {
         osDelay(1);
     }
-    /* USER CODE END main_thread */
+  /* USER CODE END main_thread */
 }
 
 /* Private application code --------------------------------------------------*/

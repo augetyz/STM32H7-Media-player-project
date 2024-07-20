@@ -37,8 +37,6 @@
      PA13 (JTMS/SWDIO)   ------> DEBUG_JTMS-SWDIO
      PH1-OSC_OUT (PH1)   ------> RCC_OSC_OUT
      PH0-OSC_IN (PH0)   ------> RCC_OSC_IN
-     PH11   ------> I2C4_SCL
-     PH12   ------> I2C4_SDA
 */
 void MX_GPIO_Init(void)
 {
@@ -107,20 +105,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(KEY_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PH11 PH12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C4;
-  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
-//  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
-//  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
