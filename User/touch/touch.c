@@ -12,22 +12,31 @@ void touch_RST()
 void Touch_Read_Reg(uint16_t reg_address,uint8_t * pdate,uint16_t size)
 {
     User_I2C_Mem_Read(T_S_ADDR, reg_address, pdate, size);
+//    HAL_I2C_Mem_Read(&hi2c1,T_S_ADDR,reg_address,
+//                     I2C_MEMADD_SIZE_16BIT,pdate,size,0XFF);
 }
+
 void Touch_Write_Reg(uint16_t reg_address,uint8_t * pdate,uint16_t size)
 {
     User_I2C_Mem_Write(T_S_ADDR, reg_address, pdate, size);
+//    HAL_I2C_Mem_Write(&hi2c1,T_S_ADDR,reg_address,
+//                     I2C_MEMADD_SIZE_16BIT,pdate,size,0XFF);
 }
 // 初始化屏幕
 void Touch_Init(void) {
     uint8_t mode = 0x00;
     uint8_t buffer[8]={0};
     uint16_t X_Max,Y_Max;
+    Int_GPIO_Output();
     TS_RST_0; // 复位触摸屏
-    HAL_Delay(20);
+    GPIOD->ODR&=~GPIO_PIN_12;// 拉低INT
+    HAL_Delay(10);
     TS_RST_1; // 释放复位
-    HAL_Delay(200);
+    HAL_Delay(10);
+    Int_GPIO_Input();// INT改为悬浮输入
     /*检测I2C设备地址是否有回应，并在调用"i2c_CheckDevice()"过程中初始化软件I2C的SDA、SCL总线*/
     if(i2c_CheckDevice(T_S_ADDR)==0)
+//    if(HAL_I2C_IsDeviceReady(&hi2c1,T_S_ADDR,10,0XFF)==HAL_OK)
         printf("i2c_CheckDevice:True\n");
     else
     {
@@ -69,7 +78,31 @@ void Touch_Init(void) {
 
     Touch_ReadMaxXY(&X_Max,&Y_Max);
     printf("Touch_ReadMaxXY X:%d Y:%d\r\n",X_Max,Y_Max);
-    Touch_SoftRst();
+    mode=0;
+    Touch_Write_Reg(GT911_CLEARBUF_REG,&mode,1);//清标志
+    Touch_Read_Reg(GT_GSTID_REG,&mode, 1);
+    printf("Number of fingers: %#X\n", mode);
+}
+// 读取触摸数据
+void Touch_scan(void) {
+    uint8_t num_fingers=0;
+    uint8_t buffer[9];
+    uint8_t temp=0;
+    uint16_t coord_X,coord_Y;
+
+    Touch_Read_Reg(GT_GSTID_REG,&num_fingers, 1);
+    Touch_Write_Reg(GT_GSTID_REG,&temp,1);//清标志
+    Touch_Read_Reg(GT_GSTID_REG,&num_fingers, 1);
+    printf("Number of fingers: %#X\n", num_fingers);
+    num_fingers&=0XF;
+
+    for (uint8_t i = 0; i < num_fingers; i++) {
+        Touch_Read_Reg(GT_GSTID_REG + 1 + (i * 4), buffer, 4);
+        coord_X=((uint16_t )buffer[1] << 8) + buffer[0];
+        coord_Y=((uint16_t )buffer[3] << 8) + buffer[2];
+        printf("The Coord:X:%d,Y:%d\n",coord_X,coord_Y);
+    }
+
 }
 void Touch_ReadMaxXY(uint16_t *X,uint16_t *Y)
 {
@@ -78,24 +111,6 @@ void Touch_ReadMaxXY(uint16_t *X,uint16_t *Y)
     *X = buf[0] + buf[1] * 256;
     *Y = buf[2] + buf[3] * 256;
 }
-// 读取触摸数据
-void Touch_scan(void) {
-    uint8_t num_fingers=0;
-    uint8_t buffer[9];
-    uint8_t temp=0;
-    uint16_t coord_X,coord_Y;
-    Touch_Read_Reg(GT911_READ_XY_REG,&num_fingers, 1);
-    Touch_Write_Reg(GT911_CLEARBUF_REG,&temp,1);//清标志
-    num_fingers&=0XF;
-    printf("Number of fingers: %d\n", num_fingers);
-    for (uint8_t i = 0; i < num_fingers; i++) {
-        Touch_Read_Reg(GT911_READ_XY_REG + 1 + (i * 4), buffer, 4);
-        coord_X=((uint16_t )buffer[1] << 8) + buffer[0];
-        coord_Y=((uint16_t )buffer[3] << 8) + buffer[2];
-        printf("The Coord:X:%d,Y:%d\n",coord_X,coord_Y);
-    }
-}
-
 void touch_test()
 {
     touch_RST();
@@ -109,4 +124,24 @@ void Touch_SoftRst()
     HAL_Delay(100);
     temp=0;
     Touch_Write_Reg(GT911_COMMAND_REG,&temp,1);
+}
+void Int_GPIO_Output()
+{
+// 配置PG12为输出模式
+    GPIOG->MODER &= ~(GPIO_MODER_MODE12);
+    GPIOG->MODER |= (1 << GPIO_MODER_MODE12_Pos);
+
+// 配置PG12为推挽输出
+    GPIOG->OTYPER &= ~(GPIO_OTYPER_OT12);
+
+// 配置PG12为高速输出
+    GPIOG->OSPEEDR |= (3 << GPIO_OSPEEDR_OSPEED12_Pos);
+}
+void Int_GPIO_Input()
+{
+// 配置PG12为输入模式
+    GPIOG->MODER &= ~(GPIO_MODER_MODE12);
+
+// 配置PG12为悬浮输入（默认状态）
+    GPIOG->PUPDR &= ~(GPIO_PUPDR_PUPD12);
 }

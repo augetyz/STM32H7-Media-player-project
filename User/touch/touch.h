@@ -57,6 +57,8 @@
 #define GT_TP5_REG 		        0X8170	/* 第五个触摸点数据地址   */
 
 
+void Int_GPIO_Output();
+void Int_GPIO_Input();
 
 void touch_RST();
 void touch_test();

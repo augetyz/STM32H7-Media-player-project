@@ -4,6 +4,8 @@
 #include "callback.h"
 #include <stdio.h>
 #include "usart.h"
+#include "touch.h"
+
 /*
  * 按键中断 PI4 下降沿中断 触发中断回调函数。
  * */

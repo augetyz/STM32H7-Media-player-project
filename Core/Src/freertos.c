@@ -236,8 +236,8 @@ void key_thread(void const * argument)
     uint8_t TS_int=0;
     for(;;)
     {
-        Touch_scan();
-        osDelay(1);
+//        Touch_scan();
+        osDelay(20);
     }
   /* USER CODE END key_thread */
 }
