@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "STM32H750XBH6_7_Cache_test",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "STM32H750XBH6_7_Cache_test.elf::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-STM32H750XBH6_7_Cache_test.elf-Debug-d4413e8c407e7ddf4896.json",
+					"name" : "STM32H750XBH6_7_Cache_test.elf",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/STM32_Example/ClionProjects/STM32H750XBH6_LVGL/cmake-build-debug-mingw-stm32",
+		"source" : "E:/STM32_Example/ClionProjects/STM32H750XBH6_LVGL"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
