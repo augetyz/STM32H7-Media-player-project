@@ -23,12 +23,12 @@
 /* USER CODE BEGIN 0 */
 
 #include "dma2d.h"
-//LCD帧缓冲区首地�?,这里定义在SDRAM里面.
+//LCD帧缓冲区首地�?,这里定义在SDRAM里面.
 #define LCD_FRAME_BUF_ADDR			0XC0000000
 #define PIXELS_W    1024
 #define PIXELS_H    600
 #define PIXELS_DIR  0
-//定义�?大屏分辨率时,LCD�?�?的帧缓存数组大小
+//定义�?大屏分辨率时,LCD�?�?的帧缓存数组大小
 uint16_t g_ltdc_framebuf[PIXELS_W][PIXELS_H] __attribute__((at(LCD_FRAME_BUF_ADDR)));
 
 /* USER CODE END 0 */
@@ -247,17 +247,17 @@ void HAL_LTDC_MspDeInit(LTDC_HandleTypeDef* ltdcHandle)
 /* USER CODE BEGIN 1 */
 
 //LTDC填充矩形,DMA2D填充
-//(sx,sy),(ex,ey):填充矩形对角坐标,区域大小�?:(ex-sx+1)*(ey-sy+1)
+//(sx,sy),(ex,ey):填充矩形对角坐标,区域大小�?:(ex-sx+1)*(ey-sy+1)
 //color:要填充的颜色
-//有时候需要频繁的调用填充函数，所以为了�?�度，填充函数采用寄存器版本�?
+//有时候需要频繁的调用填充函数，所以为了�?�度，填充函数采用寄存器版本�?
 void LTDC_Fill(uint16_t sx,uint16_t sy,uint16_t ex,uint16_t ey,uint32_t color)
 {
-    uint32_t psx,psy,pex,pey;	//以LCD面板为基准的坐标�?,不随横竖屏变化�?�变�?
+    uint32_t psx,psy,pex,pey;	//以LCD面板为基准的坐标�?,不随横竖屏变化�?�变�?
     uint32_t timeout=0;
     uint16_t offline;
     uint32_t addr;
 
-    //坐标系转�?
+    //坐标系转�?
     if(PIXELS_DIR)	//横屏
     {
         psx=sx;psy=sy;
@@ -272,18 +272,18 @@ void LTDC_Fill(uint16_t sx,uint16_t sy,uint16_t ex,uint16_t ey,uint32_t color)
 
     __HAL_RCC_DMA2D_CLK_ENABLE();	//使能DM2D时钟
     DMA2D->CR&=~(DMA2D_CR_START);	//先停止DMA2D
-    DMA2D->CR=DMA2D_R2M;			//寄存器到存储器模�?
+    DMA2D->CR=DMA2D_R2M;			//寄存器到存储器模�?
     DMA2D->OPFCCR=LTDC_PIXEL_FORMAT_RGB565;	//设置颜色格式
-    DMA2D->OOR=offline;				//设置行偏�?
+    DMA2D->OOR=offline;				//设置行偏�?
 
-    DMA2D->OMAR=addr;				//输出存储器地�?
-    DMA2D->NLR=(pey-psy+1)|((pex-psx+1)<<16);	//设定行数寄存�?
-    DMA2D->OCOLR=color;						//设定输出颜色寄存�?
+    DMA2D->OMAR=addr;				//输出存储器地�?
+    DMA2D->NLR=(pey-psy+1)|((pex-psx+1)<<16);	//设定行数寄存�?
+    DMA2D->OCOLR=color;						//设定输出颜色寄存�?
     DMA2D->CR|=DMA2D_CR_START;				//启动DMA2D
     while((DMA2D->ISR&(DMA2D_FLAG_TC))==0)	//等待传输完成
     {
         timeout++;
-        if(timeout>0X1FFFFF)break;	//超时�?�?
+        if(timeout>0X1FFFFF)break;	//超时�?�?
     }
     DMA2D->IFCR|=DMA2D_FLAG_TC;		//清除传输完成标志
 }
@@ -303,11 +303,11 @@ void LTDC_OFF(void)
 {
     HAL_GPIO_WritePin(LCD_BL_GPIO_Port,LCD_BL_Pin,0);
 }
-// 初始�?
+// 初始�?
 void LTDC_Init(void)
 {
 
-    HAL_LTDC_SetWindowPosition(&hltdc,0,0,0);  //设置窗口的位�?
+    HAL_LTDC_SetWindowPosition(&hltdc,0,0,0);  //设置窗口的位�?
     HAL_LTDC_SetWindowSize(&hltdc,PIXELS_W,PIXELS_H,0);//设置窗口大小
 
     LTDC_ON();

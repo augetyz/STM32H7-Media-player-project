@@ -27,7 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "SD_use.h"
 #include "sdmmc.h"
-#include "../../Drivers/touch/touch.h"
+#include "../../User//touch/touch.h"
 
 /* USER CODE END Includes */
 
@@ -233,10 +233,11 @@ void key_thread(void const * argument)
 {
   /* USER CODE BEGIN key_thread */
     /* Infinite loop */
+    uint8_t TS_int=0;
     for(;;)
     {
-//        FT5206_Read_Touch();
-        osDelay(100);
+        Touch_scan();
+        osDelay(1);
     }
   /* USER CODE END key_thread */
 }

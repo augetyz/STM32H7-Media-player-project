@@ -22,7 +22,7 @@
 #include "stm32h7xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../Drivers/touch/touch.h"
+#include "../../User//touch/touch.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
