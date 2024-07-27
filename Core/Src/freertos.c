@@ -233,11 +233,18 @@ void key_thread(void const * argument)
 {
   /* USER CODE BEGIN key_thread */
     /* Infinite loop */
-    uint8_t TS_int=0;
+    uint8_t TS_num=0;
+    Touch_Point Touch_data;
     for(;;)
     {
-//        Touch_scan();
+        Touch_scan(&Touch_data);
         osDelay(20);
+        if(Touch_data.Touch_num>0)
+        {
+            for (TS_num = 0;  TS_num < Touch_data.Touch_num; TS_num++) {
+                printf("TouchScan:ID:%d: X:%d,Y:%d\n\n",Touch_data.Point_ID[TS_num],Touch_data.Coord_X[TS_num],Touch_data.Coord_Y[TS_num]);
+            }
+        }
     }
   /* USER CODE END key_thread */
 }
